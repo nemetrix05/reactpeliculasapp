@@ -3,56 +3,49 @@ import './App.css';
 // Para aplicar estilos a la aplicacion llamamos el plugin bulma
 import 'bulma/css/bulma.css';
 // Importo los componentes externos de la UI
-import { Title } from './components/intro/Title';
-import { SearchForm } from './components/searchbox/search';
+import { HomePage } from './components/pages/home';
+// Importamos la paginas externas como componentes
+import { DetailMovie } from './components/pages/detailMovie';
+// importamos los componentes necesarios para hacer un enrutado SPA en React
+import { Switch, Route} from 'react-router-dom';
+import { NotFount } from './components/pages/404';
+
 
 class App extends Component {
 
-  // en el componente donde se muestran los resultados, creamos un state e iniciamos con una array vacia para que llame los datos
-
-  state = {
-    peliculas: []
-  }
-
-  // en este metodo recibe la respuesta del api y actualiza este estado para mapear la respuesta
-  showMovies = (peliculas) => {
-    this.setState({
-      peliculas
-    });
-  }
-
-  // en este metodo mapeamos la respuesta del JSON
-  showAll(){
-    const { peliculas } = this.state
-    return peliculas.map(movie => {
-        return(
-          <div key={movie.imdbID}>
-            <h2>{movie.Title}</h2>
-
-            {movie.Poster === 'N/A' ? 'No tiene imagen' : <img src={movie.Poster} alt={movie.Title} />}
-            
-          </div>
-        ); 
-    })
-  }
-
   render() {
+    /*
+    // En el metodo render del componente padre, creamos el enrutamiento nativo de Javascript. 
+    // url obtiene la url actual
+    // hasid pregunta si en la url existe el parametro id
+    const url = new URL(document.location)
+
+    // Se hace una ternaria sobre el id que recibe por parametro
+    const page = url.searchParams.has('id')
+    ?
+    <DetailMovie id={url.searchParams.get('id')} />
+    :
+    <HomePage />
+
+    */
+
+    // cambiamos la distribucion de render para usar el react router.
+    // dentro de ese componente Switch debemos especificar las rutas del app
+    // en el componente Route se define la ruta y el componente a cargar 
+
+
+    // La ultima ruta recibida se toma como 404
     return (
       <div className="App container">
-        <Title>
-          Buscador de Peliculas
-        </Title>
-        <div className='searchbox'>
-            <SearchForm showPeliculas={this.showMovies}/>
-        </div>
-        
-        {this.state.peliculas.length === 0
-        ? <p>No hay resultados</p>
-        : this.showAll()
-        }
-        
+        <Switch>
+          <Route exact path='/' component={HomePage} />
+          <Route path='/detail/:id' component={DetailMovie} />
+          <Route component={NotFount} />
+        </Switch>
       </div>
     );
+
+
   }
 }
 

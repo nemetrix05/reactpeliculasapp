@@ -2,7 +2,21 @@
   text-align: center;
   padding: 30px 0 0 0;
 }
-.searchbox{
+.searchbox, 
+.custom-danger{
   display: flex;
   justify-content: center;
+}
+
+.custom-danger,
+.vmore{
+  margin: 20px 0;
+}
+
+.space-outer{
+  padding: 50px 0;
+}
+
+.vmore{
+  display: block !important;
 }

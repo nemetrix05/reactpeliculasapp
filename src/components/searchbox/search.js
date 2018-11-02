@@ -36,17 +36,14 @@ class SearchForm extends Component{
             .then(res => res.json())
             .then(result =>{
                 // para sacar los valores de la respuesta debemos indicarlos en una constante e indicarle que son de tipo JSON
+                // Para validar la respuesta y que no tenga undefine, debemos pasarlo valores por defecto, asi evitamos errores de ejecucion
+
+                // const {Search = [], totalResults = '0'}
                 const { Search, totalResults } = result;
                 console.log({Search, totalResults});
                 this.props.showPeliculas(Search)
             })
     }
-
-
-    componentDidCatch(error, errorInfo){
-        console.log('estos son los errores', error, errorInfo);
-    }
-
 
     render(){
         return(
